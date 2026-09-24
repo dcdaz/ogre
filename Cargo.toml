@@ -1,0 +1,27 @@
+[package]
+name = "ogre"
+version = "0.1.0"
+edition = "2024"
+authors = ["Daniel Cordova <danesc87@gmail.com>"]
+license = "GPLv3"
+
+[dependencies]
+dirs = "7.0.0"
+config = { version = "0.15.26", features = ["yaml"] }
+serde = { version = "1.0.229", features = ["derive"] }
+data-encoding = "2.11.1"
+chrono = "0.4.45"
+filetime = "0.2.29"
+tokio = { version = "1.53.1", features = ["full"] }
+reqwest_dav = "0.3.3"
+
+[profile.release]
+opt-level = 3
+debug = false
+rpath = false
+lto = false
+debug-assertions = false
+codegen-units = 16
+panic = 'unwind'
+incremental = false
+overflow-checks = false
