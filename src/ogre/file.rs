@@ -46,7 +46,7 @@ pub async fn download_upload_file(
                 file.last_modified
             );
         }
-        upload_file(href, &local_file_path, client).await?;
+        upload_file(href, file_name, &local_file_path, client).await?;
         Ok(())
     } else {
         if should_debug {
@@ -77,7 +77,7 @@ async fn download_file(
     local_file_path: &String,
     client: &Client
 ) -> Result<(), Box<dyn Error>> {
-    println!("==> Downloading file '{}'", href);
+    println!("==> Downloading file '{file_name}'");
     let mut local_file = fs::File::create(local_file_path.clone())?;
     let mut file = client.get(href).await?;
     if !file.status().is_success() {
@@ -96,10 +96,11 @@ async fn download_file(
 
 async fn upload_file(
     href: &str,
+    file_name: String,
     local_file_path: &String,
     client: &Client
 ) -> Result<(), Box<dyn Error>> {
-    println!("==> Uploading file '{}'", href);
+    println!("==> Uploading file '{file_name}'");
     let local_file = fs::read(local_file_path)?;
     client.put(href, local_file).await?;
     Ok(())
